@@ -21,6 +21,12 @@ ystack is designed to be accessible to all. We welcome developers of all skill l
 To maintain high quality, all contributions must follow this standard:
 
 1.  **Read the Patterns**: Before touching code, read the existing agents in `swarmstack/agents/`.
+### Branch Strategy
+- `main`: The frozen, stable production branch. **Direct pushes are locked out.**
+- `dev`: The active development and staging branch where features are integrated.
+- Create feature branches originating from `dev` (e.g., `feature/new-agent`, `fix/marketing-prompt`).
+- Create your Pull Requests targeting `dev` for integration, never `main`.
+
 2.  **Modular Changes**: Keep pull requests focused on a single logical change.
 3.  **Conventional Commits**: Use `feat:`, `fix:`, `chore:`, etc.
 4.  **Agent Audit**: Every PR must be reviewed by the **Review Agent** and checked for breaking changes by the **QA Agent**.

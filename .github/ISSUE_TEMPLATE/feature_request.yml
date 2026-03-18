@@ -1,0 +1,32 @@
+name: Feature Request
+description: Suggest an idea, new agent, or new skill for ystack
+title: "[FEATURE] "
+labels: ["enhancement"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve the swarm! 
+        Please ensure your suggestion aligns with our core ethos: simple, specific, technical, and stealth-premium. No fluff.
+  - type: input
+    id: problem
+    attributes:
+      label: Is your feature request related to a problem?
+      description: "A clear and concise description of what the problem is. Ex. I'm always frustrated when..."
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you'd like
+      description: "A clear and concise description of what you want to happen. For example, 'Add a new agent focused on X.'"
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe alternatives you've considered
+      description: "A clear and concise description of any alternative solutions or features you've considered."
+    validations:
+      required: false

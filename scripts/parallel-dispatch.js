@@ -114,6 +114,7 @@ function spawnAgent(id, model) {
       cwd: process.cwd(),
       env: process.env,
       stdio: ["pipe", "pipe", "pipe"],
+      shell: true
     });
 
     proc.stdin.write(content);

@@ -109,3 +109,13 @@ jobs:
             exit 1
           fi
           echo "Branch target valid"
+
+  # ── Auto-label PRs ───────────────────────────────────────────────────────
+  auto-label:
+    name: Auto-label PR
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/labeler@v4
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"

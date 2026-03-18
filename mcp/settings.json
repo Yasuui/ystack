@@ -1,43 +1,66 @@
 {
+  "experimental": {
+    "enableAgents": true
+  },
+  "agents": {
+    "overrides": {
+      "ystack_frontend": {
+        "modelConfig": { "model": "gemini-3-pro" },
+        "runConfig": { "maxTurns": 60 }
+      },
+      "ystack_backend": {
+        "modelConfig": { "model": "gemini-3-pro" },
+        "runConfig": { "maxTurns": 60 }
+      },
+      "ystack_rootcause": {
+        "modelConfig": { "model": "gemini-3-pro" },
+        "runConfig": { "maxTurns": 40 }
+      },
+      "ystack_motion": {
+        "modelConfig": { "model": "gemini-3-flash-preview" },
+        "runConfig": { "maxTurns": 20 }
+      },
+      "ystack_qa": {
+        "modelConfig": { "model": "gemini-3-flash-preview" },
+        "runConfig": { "maxTurns": 30 }
+      },
+      "ystack_review": {
+        "modelConfig": { "model": "gemini-3-flash-preview" },
+        "runConfig": { "maxTurns": 20 }
+      },
+      "ystack_ship": {
+        "modelConfig": { "model": "gemini-3-flash-preview" },
+        "runConfig": { "maxTurns": 20 }
+      }
+    }
+  },
   "mcpServers": {
     "github": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "ADD_YOUR_TOKEN_HERE"
-      },
-      "description": "Git operations, PRs, issues, branch management"
+      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "ADD_YOUR_TOKEN_HERE" }
     },
     "playwright": {
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"],
-      "description": "Browser automation, E2E testing, screenshots, DOM inspection. No API key needed."
+      "args": ["-y", "@playwright/mcp@latest"]
     },
     "firecrawl": {
       "command": "npx",
       "args": ["-y", "firecrawl-mcp"],
-      "env": {
-        "FIRECRAWL_API_KEY": "ADD_YOUR_KEY_HERE"
-      },
-      "description": "Web scraping and docs extraction. Used to verify API signatures before use. Get free key at firecrawl.dev"
+      "env": { "FIRECRAWL_API_KEY": "ADD_YOUR_KEY_HERE" }
     },
     "sequential-thinking": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
-      "description": "Multi-step reasoning chains. No API key needed."
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
     },
     "filesystem": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."],
-      "description": "Explicit file operations with audit trail. Scoped to current project directory."
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]
     },
     "supabase": {
       "command": "npx",
       "args": ["-y", "supabase-mcp-server"],
-      "env": {
-        "SUPABASE_ACCESS_TOKEN": "ADD_YOUR_TOKEN_HERE"
-      },
-      "description": "Database schema management, RLS policies, migrations. Get token from Supabase dashboard."
+      "env": { "SUPABASE_ACCESS_TOKEN": "ADD_YOUR_TOKEN_HERE" }
     }
   }
 }

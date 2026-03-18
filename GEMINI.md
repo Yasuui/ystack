@@ -15,38 +15,39 @@ explicitly irreversible (drop table, delete without backup).
 
 ---
 
-## Subagent Dispatch (Antigravity Native)
+## Subagent Dispatch
 
-Antigravity supports spawning subagents via the `@subagent` directive.
-Use this for ALL multi-domain tasks to achieve true parallel execution.
-
-### Syntax
-
+### In Antigravity (within-session, sequential)
+Use native agent syntax to invoke specialists by name:
 ```
-@subagent(id="frontend", skill="swarmstack/agents/frontend.md")
-@subagent(id="backend", skill="swarmstack/agents/backend.md")
-@subagent(id="motion", skill="swarmstack/agents/motion.md", dependsOn=["frontend"])
-@subagent(id="qa", skill="swarmstack/agents/qa.md", dependsOn=["frontend","backend","motion"])
-@subagent(id="review", skill="swarmstack/agents/review.md", dependsOn=["frontend","backend"])
-@subagent(id="ship", skill="swarmstack/agents/ship.md", dependsOn=["qa","review"])
+@ystack_frontend  [task]
+@ystack_backend   [task]
+@ystack_motion    review frontend output
+@ystack_qa        run test suite
+@ystack_review    security audit
+@ystack_ship      commit and PR to dev
 ```
 
-### Rules for dispatch
+### From terminal (true parallel, separate OS processes)
+```bash
+# Full pipeline — frontend+backend run simultaneously
+node scripts/full-run.js "build login page with Clerk auth"
 
-- `frontend` and `backend` ALWAYS spawn in parallel — they own separate files
-- `motion` ALWAYS runs after `frontend` — patches motion before QA sees it
-- `qa` and `review` run in parallel after both `frontend`+`motion` and `backend` complete
-- `ship` is the final gate — only runs when BOTH `qa` and `review` return READY
-- Write each subagent's output to `.agents/brain/{id}-output.md` immediately on completion
-- Orchestrator reads all brain files before consolidating — never from memory
+# Shortcuts
+node scripts/full-run.js --ui-only "polish command centre"
+node scripts/full-run.js --api-only "add Plaid sync endpoint"
+node scripts/full-run.js --bug "fix WebSocket reconnection crash"
 
-### Persona isolation
+# Manual group control
+node scripts/parallel-dispatch.js --tasks frontend,backend
+node scripts/parallel-dispatch.js --tasks qa,review --gate frontend,backend,motion
+node scripts/parallel-dispatch.js --tasks ship --gate qa,review
+```
 
-When dispatching a subagent, that agent's context is CLEAN.
-It does not inherit the orchestrator's conversation history.
-It reads its skill file + the relevant `.agents/brain/` files only.
-This is intentional — cross-contamination between planner and implementer
-is the primary cause of quality degradation in single-context swarms.
+### Model routing
+frontend + backend + rootcause → gemini-3-pro
+motion + qa + review + ship + docs + marketing → gemini-3-flash-preview
+Override in mcp/settings.json under agents.overrides.
 
 ---
 

@@ -13,6 +13,10 @@ This file records the patterns, design decisions, and optimizations discovered d
 - **Pattern: Premium CSS**: Use `taste-soft-skill` for all UI components — `backdrop-filter: blur(16px)`, glassmorphism, and generous whitespace.
 - **Pattern: Read Before Write**: Always read the file structure and `AGENTS.md` before making changes to prevent convention drift.
 - **Optimization: GitHub CLI**: Automate repo creation, labeling, and issue tracking using `gh`.
+- **v1.2 Benchmark Accuracy Note (2026-03-18)**: 1.85x speedup measured on concurrent mock agents. Real Gemini 3 Pro calls run 20-45s each. Expect 40-60% wall clock reduction on real tasks, as API response variance outweighs dispatch overhead at real-world latency.
+  - **Mechanism**: `Promise.all` on `child_process.spawn()` = concurrent OS processes.
+  - **Correction**: Use "concurrent process spawning" for precision in technical documentation.
+
 
 ---
 

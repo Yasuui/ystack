@@ -1,0 +1,111 @@
+name: ystack CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  # ── Validate agent files ─────────────────────────────────────────────────
+  validate-agents:
+    name: Validate agent and skill files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check required files exist
+        run: |
+          files=(
+            "GEMINI.md"
+            "AGENTS.md"
+            "install.sh"
+            "config/AGENTS.global.md"
+            "config/bootstrap.md"
+            "swarmstack/orchestrator.md"
+            "swarmstack/agents/frontend.md"
+            "swarmstack/agents/motion.md"
+            "swarmstack/agents/backend.md"
+            "swarmstack/agents/qa.md"
+            "swarmstack/agents/review.md"
+            "swarmstack/agents/ship.md"
+            "swarmstack/agents/rootcause.md"
+            "swarmstack/agents/docs.md"
+            "swarmstack/agents/marketing.md"
+            "swarmstack/skills/living-skills.md"
+            "swarmstack/skills/git-standards.md"
+            "swarmstack/skills/motion-skills.md"
+            "mcp/settings.json"
+          )
+          missing=()
+          for f in "${files[@]}"; do
+            if [ ! -f "$f" ]; then
+              echo "MISSING: $f"
+              missing+=("$f")
+            fi
+          done
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "ERROR: ${#missing[@]} required file(s) missing"
+            exit 1
+          fi
+          echo "All required files present"
+
+      - name: Validate mcp/settings.json is valid JSON
+        run: python3 -c "import json; json.load(open('mcp/settings.json')); print('settings.json valid')"
+
+      - name: Check for fake packages in settings.json
+        run: |
+          # Ensure context7 (removed in v1.1) is not referenced
+          if grep -q "context7" mcp/settings.json; then
+            echo "ERROR: context7 found in settings.json — use firecrawl instead"
+            exit 1
+          fi
+          echo "No removed packages found"
+
+      - name: Check GEMINI.md has subagent dispatch syntax
+        run: |
+          if ! grep -q "@subagent" GEMINI.md; then
+            echo "ERROR: GEMINI.md missing @subagent dispatch syntax"
+            exit 1
+          fi
+          echo "GEMINI.md has subagent syntax"
+
+      - name: Check agent files have required sections
+        run: |
+          required_section="## Role"
+          for agent in swarmstack/agents/*.md; do
+            # Motion and marketing agents use Role header
+            if ! grep -q "^## Role\|^# Role\|^## Standards\|^# Role\|^You " "$agent"; then
+              echo "WARNING: $agent may be missing role definition"
+            fi
+          done
+          echo "Agent files checked"
+
+      - name: Check install.sh is executable and valid bash
+        run: |
+          bash -n install.sh
+          echo "install.sh syntax valid"
+
+      - name: Check no placeholder tokens in settings.json are hardcoded keys
+        run: |
+          # Verify no real API keys accidentally committed
+          if grep -E "sk-|ghp_|fc-[a-z0-9]{32}" mcp/settings.json; then
+            echo "ERROR: Possible real API key found in settings.json"
+            exit 1
+          fi
+          echo "No hardcoded API keys found"
+
+  # ── Check branch protection ───────────────────────────────────────────────
+  check-target-branch:
+    name: Enforce PR target branch
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: PRs to main must come from dev
+        run: |
+          if [ "${{ github.base_ref }}" = "main" ] && [ "${{ github.head_ref }}" != "dev" ]; then
+            echo "ERROR: PRs to main must come from the dev branch"
+            echo "Current head: ${{ github.head_ref }}"
+            exit 1
+          fi
+          echo "Branch target valid"

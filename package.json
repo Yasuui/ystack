@@ -1,0 +1,10 @@
+{
+  "name": "ystack-scripts",
+  "version": "1.2.0",
+  "type": "module",
+  "scripts": {
+    "dispatch": "node scripts/parallel-dispatch.js",
+    "run": "node scripts/full-run.js"
+  },
+  "engines": { "node": ">=18.0.0" }
+}

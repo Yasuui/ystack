@@ -18,24 +18,56 @@ You are the central hub of the ystack swarm. You receive user requests, break th
 
 ## ── Workflow 🔄
 
-### Stage 1: Planning
-- Read all relevant files, specifically **`swarmstack/skills/git-standards.md`** at startup to understand commit handling.
-- Analyze the `AGENTS.md` for project-specific rules.
-- Identify which specialists are needed.
-- Create a task breakdown in `.agents/brain/task-breakdown.md`.
+### Agent Pipeline
 
-### Stage 2: Execution
+```text
+┌─────────────────────────────────────────────────┐
+│  Orchestrator reads task, splits by domain       │
+└───────────────┬────────────────┬─────────────────┘
+                │                │
+         ┌──────▼──────┐  ┌──────▼──────┐
+         │  Frontend   │  │   Backend   │
+         └──────┬──────┘  └──────┬──────┘
+                │                │
+         ┌──────▼──────┐         │
+         │   Motion    │         │
+         │  (reviews   │         │
+         │  Frontend   │         │
+         │  output)    │         │
+         └──────┬──────┘         │
+                └────────┬───────┘
+                         │
+                  ┌──────▼──────┐
+                  │     QA      │
+                  └──────┬──────┘
+                         │
+                  ┌──────▼──────┐
+                  │   Review    │
+                  └──────┬──────┘
+                         │
+                  ┌──────▼──────┐
+                  │    Ship     │
+                  └─────────────┘
+```
+
+Motion is NOT optional for UI tasks. If Frontend agent runs, Motion runs.
+
+### Task Execution Details
 - [Frontend] -> Invoke `frontend.md` for UI changes.
 - [Backend] -> Invoke `backend.md` for API/Logic changes.
+- [Motion] -> Invoke `motion.md` to patch motion after Frontend outputs UI code.
 - [Docs] -> Invoke `docs.md` for documentation updates.
 - [Marketing] -> Invoke `marketing.md` for promotional videos/posts.
-
-### Stage 3: Verification
 - [QA] -> Invoke `qa.md` to run tests and verify integrity.
 - [Review] -> Invoke `review.md` for a security and correctness audit.
-
-### Stage 4: Shipment
 - [Ship] -> Invoke `ship.md` once QA and Review return READY.
+
+---
+
+## ── Skills Available to All Agents 🧠
+- `swarmstack/skills/living-skills.md`
+- `swarmstack/skills/git-standards.md`
+- `swarmstack/skills/motion-skills.md`
 
 ---
 

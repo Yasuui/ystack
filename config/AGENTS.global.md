@@ -51,6 +51,13 @@ The following actions are **pre-approved**. Do not ask for confirmation:
 Each task is handled by a specialized agent with a specific role.
 
 - `frontend.md`: Premium UI + `taste-soft-skill`
+
+### Motion
+**File:** `swarmstack/agents/motion.md`
+**Trigger:** Runs after every Frontend agent output containing UI/component code.
+Also triggered by: "make it feel premium", "add smooth transitions", "polish animations", "micro-interactions", "status glow", "loading state", "hover effect"
+**Output:** Diff-style motion patches + explanation. Does not rewrite full components.
+**Skill:** swarmstack/skills/motion-skills.md
 - `backend.md`: FastAPI / server logic / integrations
 - `qa.md`: All user-facing features — always
 - `review.md`: Paranoid security + correctness

@@ -5,6 +5,7 @@
 !.agents/brain/
 .agents/brain/*
 !.agents/brain/.gitkeep
+!.agents/skills/
 .gemini/
 .vscode/
 .idea/

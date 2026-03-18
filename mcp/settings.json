@@ -3,29 +3,41 @@
     "github": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "ADD_YOUR_TOKEN_HERE" }
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ADD_YOUR_TOKEN_HERE"
+      },
+      "description": "Git operations, PRs, issues, branch management"
     },
     "playwright": {
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"]
-    },
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"]
-    },
-    "sequential-thinking": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
-    },
-    "vercel": {
-      "command": "npx",
-      "args": ["-y", "@vercel/mcp-adapter@latest"],
-      "env": { "VERCEL_TOKEN": "ADD_YOUR_TOKEN_HERE" }
+      "args": ["-y", "@playwright/mcp@latest"],
+      "description": "Browser automation, E2E testing, screenshots, DOM inspection. No API key needed."
     },
     "firecrawl": {
       "command": "npx",
       "args": ["-y", "firecrawl-mcp"],
-      "env": { "FIRECRAWL_API_KEY": "ADD_YOUR_KEY_HERE" }
+      "env": {
+        "FIRECRAWL_API_KEY": "ADD_YOUR_KEY_HERE"
+      },
+      "description": "Web scraping and docs extraction. Used to verify API signatures before use. Get free key at firecrawl.dev"
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "description": "Multi-step reasoning chains. No API key needed."
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."],
+      "description": "Explicit file operations with audit trail. Scoped to current project directory."
+    },
+    "supabase": {
+      "command": "npx",
+      "args": ["-y", "supabase-mcp-server"],
+      "env": {
+        "SUPABASE_ACCESS_TOKEN": "ADD_YOUR_TOKEN_HERE"
+      },
+      "description": "Database schema management, RLS policies, migrations. Get token from Supabase dashboard."
     }
   }
 }

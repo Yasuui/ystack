@@ -3,28 +3,29 @@
     "github": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "YOUR_GITHUB_TOKEN"
-      }
-    },
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "context7-mcp-server"]
+      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "ADD_YOUR_TOKEN_HERE" }
     },
     "playwright": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-playwright"]
+      "args": ["-y", "@playwright/mcp@latest"]
     },
-    "supabase": {
+    "context7": {
       "command": "npx",
-      "args": ["-y", "supabase-mcp-server"]
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    },
+    "vercel": {
+      "command": "npx",
+      "args": ["-y", "@vercel/mcp-adapter@latest"],
+      "env": { "VERCEL_TOKEN": "ADD_YOUR_TOKEN_HERE" }
     },
     "firecrawl": {
       "command": "npx",
-      "args": ["-y", "firecrawl-mcp-server"],
-      "env": {
-        "FIRECRAWL_API_KEY": "YOUR_FIRECRAWL_KEY"
-      }
+      "args": ["-y", "firecrawl-mcp"],
+      "env": { "FIRECRAWL_API_KEY": "ADD_YOUR_KEY_HERE" }
     }
   }
 }

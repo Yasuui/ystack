@@ -1,0 +1,49 @@
+name: MCP Failure Report
+description: Report an issue with one of the configured MCP servers (firecrawl, supabase, etc.)
+title: "[MCP] "
+labels: ["mcp", "bug"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting an MCP failure. ystack relies heavily on these servers for external data.
+  - type: dropdown
+    id: mcp-server
+    attributes:
+      label: Which MCP Server failed?
+      options:
+        - firecrawl (Web Scraping)
+        - supabase-mcp-server (Database/Auth)
+        - shadcn (UI Component Reference)
+        - filesystem (Local File operations)
+        - sequential-thinking (Complex Reasoning)
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: failure-type
+    attributes:
+      label: Type of failure
+      options:
+        - Failed to start/initialize
+        - Tool execution timeout
+        - Hallucinated method/incorrect data returned
+        - Missing from environment
+    validations:
+      required: true
+  - type: textarea
+    id: error-logs
+    attributes:
+      label: Error Logs or Output
+      description: Paste any relevant logs from the Antigravity Agent Manager or terminal.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Provide the exact prompt or context you gave to trigger this tool.
+    validations:
+      required: true

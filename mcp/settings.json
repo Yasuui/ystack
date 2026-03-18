@@ -1,4 +1,39 @@
 {
+  "experimental": {
+    "enableAgents": true
+  },
+  "agents": {
+    "overrides": {
+      "ystack_frontend": {
+        "modelConfig": { "model": "gemini-3-pro" },
+        "runConfig": { "maxTurns": 60 }
+      },
+      "ystack_backend": {
+        "modelConfig": { "model": "gemini-3-pro" },
+        "runConfig": { "maxTurns": 60 }
+      },
+      "ystack_rootcause": {
+        "modelConfig": { "model": "gemini-3-pro" },
+        "runConfig": { "maxTurns": 40 }
+      },
+      "ystack_motion": {
+        "modelConfig": { "model": "gemini-3-flash-preview" },
+        "runConfig": { "maxTurns": 20 }
+      },
+      "ystack_qa": {
+        "modelConfig": { "model": "gemini-3-flash-preview" },
+        "runConfig": { "maxTurns": 30 }
+      },
+      "ystack_review": {
+        "modelConfig": { "model": "gemini-3-flash-preview" },
+        "runConfig": { "maxTurns": 20 }
+      },
+      "ystack_ship": {
+        "modelConfig": { "model": "gemini-3-flash-preview" },
+        "runConfig": { "maxTurns": 20 }
+      }
+    }
+  },
   "mcpServers": {
     "github": {
       "command": "npx",
@@ -9,23 +44,23 @@
       "command": "npx",
       "args": ["-y", "@playwright/mcp@latest"]
     },
-    "context7": {
+    "firecrawl": {
       "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"]
+      "args": ["-y", "firecrawl-mcp"],
+      "env": { "FIRECRAWL_API_KEY": "ADD_YOUR_KEY_HERE" }
     },
     "sequential-thinking": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
     },
-    "vercel": {
+    "filesystem": {
       "command": "npx",
-      "args": ["-y", "@vercel/mcp-adapter@latest"],
-      "env": { "VERCEL_TOKEN": "ADD_YOUR_TOKEN_HERE" }
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]
     },
-    "firecrawl": {
+    "supabase": {
       "command": "npx",
-      "args": ["-y", "firecrawl-mcp"],
-      "env": { "FIRECRAWL_API_KEY": "ADD_YOUR_KEY_HERE" }
+      "args": ["-y", "supabase-mcp-server"],
+      "env": { "SUPABASE_ACCESS_TOKEN": "ADD_YOUR_TOKEN_HERE" }
     }
   }
 }

@@ -1,0 +1,14 @@
+agents:
+  - swarmstack/agents/**
+skills:
+  - swarmstack/skills/**
+scripts:
+  - scripts/**
+config:
+  - config/**
+  - GEMINI.md
+mcp:
+  - mcp/**
+docs:
+  - README.md
+  - CONTRIBUTING.md

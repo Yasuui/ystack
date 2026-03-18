@@ -1,2 +1,0 @@
-# This file ensures the .agents/brain/ directory is included in git.
-# All agent outputs and session states will be stored here.

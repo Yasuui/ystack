@@ -1,3 +1,5 @@
+> **Status (September 2026): earlier experiment.** This is a snapshot of a multi-agent setup, not a current benchmark or a verified comparison of today's tools. I'm reworking the approach around smaller harnesses, clearer verification, and practical browser use. Follow the [public lab notes](https://github.com/Yasuui/Yasuui/tree/main/lab) for current experiments.
+
 # ystack — Antigravity Swarm System
 
 > **Free, open-source multi-agent developer swarm for Antigravity IDE and Gemini CLI.**

@@ -18,10 +18,12 @@ Choose **one repository**, define **one outcome**, make the smallest working cha
 
 ## Try it in one project
 
+**Release note:** this refresh is currently published on `dev` while the older `main` and `dev` histories are reconciled. Use the explicit `--branch dev` below rather than the default branch.
+
 This safe, opt-in setup targets **Gemini CLI** skill discovery. It does not alter global settings, install MCP servers, run agents, or scan your other repositories.
 
 ```bash
-git clone https://github.com/Yasuui/ystack.git
+git clone --branch dev https://github.com/Yasuui/ystack.git
 cd ystack
 
 # Preview first. Replace this with the absolute path of ONE project.

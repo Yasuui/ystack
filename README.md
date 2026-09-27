@@ -1,136 +1,60 @@
-# ystack — Antigravity Swarm System
+# ystack ⚡
 
-> **Free, open-source multi-agent developer swarm for Antigravity IDE and Gemini CLI.**
+**A small, opt-in development harness for building real products with AI agents.**
 
-ystack is a framework for orchestrating specialized AI agents to build, test, and ship software with extreme autonomy. It leverages the **Antigravity IDE** and **Gemini 2.0 Flash** to provide a seamless, local-first development experience.
+Choose **one repository**, define **one outcome**, make the smallest working change, and show what actually worked. You don't need a giant swarm, a long instruction file, or six MCP servers to fix a button.
 
-| | gstack | ystack |
-|---|---|---|
-| **Cost** | $20/mo Claude subscription | Free — Gemini free tier |
-| **Context window** | ~200k tokens | 1M tokens |
-| **Browser QA** | 58MB compiled binary | Native Playwright MCP |
-| **Multi-agent** | Sequential sessions | Parallel Agent Manager |
-| **Autonomy** | Frequent confirmations | Walk away, come back to a PR |
-| **Self-improvement** | Static skill files | Living Skills — updates after every run |
-| **Works in** | Claude Code only | Antigravity + Gemini CLI |
+> **September 2026 refresh:** vNext is a public starter informed by my newer local Antigravity/Gemini workflow. It is **not** a copy of my personal global configuration. Static starter checks are included; live Antigravity, model, and external-provider validation remain separate. The original March swarm is retained as a historical experiment.
 
----
+## How it works
 
-## Quick Start
+| Layer | Job |
+| --- | --- |
+| Small global adapter | Your own short defaults and conceptual model tiers; **never installed by ystack** |
+| Project contract | Local scope, acceptance criteria, constraints, and existing conventions |
+| On-demand skills | Bootstrap one project, verify a change, and prepare a clear handoff |
+
+**The loop:** selected repo → outcome → smallest useful change → focused verification → evidence → PR/handoff → separate release checks if needed.
+
+## Try it in one project
+
+This safe, opt-in setup targets **Gemini CLI** skill discovery. It does not alter global settings, install MCP servers, run agents, or scan your other repositories.
 
 ```bash
-# 1. Clone the repository into your project
-git clone https://github.com/Yasuui/ystack.git .ystack
+git clone https://github.com/Yasuui/ystack.git
+cd ystack
 
-# 2. Run the bootstrap script
-./.ystack/install.sh
+# Preview first. Replace this with the absolute path of ONE project.
+bash scripts/bootstrap-project.sh --target /absolute/path/to/your-repo
 
-# 3. Paste the contents of config/bootstrap.md into your Agent Manager
-# → Done! Your agent swarm is now configured and active.
+# Only after checking the preview:
+bash scripts/bootstrap-project.sh --target /absolute/path/to/your-repo --apply
 ```
 
----
+Open **that project** in Gemini CLI. Run `/skills list` or `/skills reload`. Then ask:
 
-## Agent Roster
+> Use ystack-bootstrap. Inspect only this repository, respect its existing conventions, and propose one small first task. Don't change global settings or duplicate existing tools.
 
-ystack uses a "divide and conquer" approach. Each task is handled by a specialized agent with a specific role and set of tools.
+Gemini CLI supports [workspace skills](https://geminicli.com/docs/cli/skills/) and [hierarchical GEMINI.md context](https://geminicli.com/docs/cli/gemini-md/). For **Antigravity**, verify the skill discovery paths in your installed version; this is not an Antigravity auto-installer.
 
-| Agent | Icon | Role | Invoke when |
-| :--- | :---: | :--- | :--- |
-| **Frontend** | 🎨 | Premium UI + `taste-soft-skill` | Any UI change, new component, design work |
-| **Backend** | ⚙️ | API / DB / Server Logic | endpoints, DB schema, auth, IPC |
-| **QA** | 🧪 | Playwright + Integrity Tests | All user-facing features — always |
-| **Review** | 🔒 | Security + Correctness Audit | Before every ship — always |
-| **Ship** | 🚢 | Git + PR + Deploy | After Review and QA return READY |
-| **RootCause** | 🔍 | Debug-first Detective | Any broken test, runtime error, or unstable system |
-| **Docs** | 📝 | README + JSDoc + Comments | New public APIs, components, README updates |
+Existing project instructions and installed skills are **never overwritten**. Dry-run is the default.
 
----
+## Three skills, not nine agents
 
-## MCP Power-Ups
+| Skill | Use it for | Output |
+| --- | --- | --- |
+| [ystack-bootstrap](vnext/skills/ystack-bootstrap/SKILL.md) | Onboard one selected repository | Small project contract and acceptance criteria |
+| [ystack-verify](vnext/skills/ystack-verify/SKILL.md) | Check only the affected change | Exact evidence, results, and unknowns |
+| [ystack-ship](vnext/skills/ystack-ship/SKILL.md) | Prepare reviewed work | Concise ship card and PR/handoff |
 
-ystack comes pre-configured with the following Model Context Protocol (MCP) integrations for max autonomy:
+Default to **one agent**. Specialists and parallel tasks are optional and should own non-overlapping work. `FAST / DEFAULT / HIGH / ESCALATE / STRONGEST` are conceptual effort tiers, **not fixed model IDs**.
 
-| MCP | Purpose | Capability |
-| :--- | :--- | :--- |
-| **GitHub** | Version Control | Create PRs, issues, commits via agent |
-| **Context7** | Live API Intelligence | Verify library methods in real-time |
-| **Playwright** | Browser Automation | E2E testing and web scraping |
-| **Supabase** | Cloud DB & Auth | Manage production database schemas |
-| **FireCrawl** | Deep Web Research | Extract structured data from any URL |
+### Deliberately out of scope
 
----
+No global repo scanning; automatic MCP setup; mandatory Playwright or full-suite testing for every edit; blanket YOLO permissions; automatic production merges, migrations or customer sends. A local green test **does not prove** live Preview, authentication, database, or provider readiness.
 
-## The "Living Skills" System
+**Read next:** [Architecture](docs/ARCHITECTURE.md) · [Migration from v1](docs/MIGRATION.md) · [My public lab notes](https://github.com/Yasuui/Yasuui/tree/main/lab).
 
-ystack agents don't just execute; they learn.
-- **Learning**: Every session's new patterns are recorded in `swarmstack/skills/living-skills.md`.
-- **Memory**: State is shared through `.agents/brain/`.
-- **Self-Improvement**: The `rootcause` agent updates skills based on resolved bugs to prevent regression.
+**Historical v1:** `swarmstack/`, `config/bootstrap.md`, `mcp/settings.json`, and the old dispatch scripts remain for study. They are not the recommended setup. `install.sh` now redirects to the safe, selected-project bootstrap.
 
----
-
-## Repo Structure
-
-```
-ystack/
-├── README.md
-├── AGENTS.md              ← lean, points to config/
-├── CONTRIBUTING.md
-├── LICENSE
-├── .gitignore
-├── install.sh
-├── config/
-│   ├── README.md
-│   ├── AGENTS.global.md   ← the full global rules (only lives here)
-│   ├── AGENTS.project-template.md
-│   └── bootstrap.md       ← the detailed bootstrap prompt (only lives here)
-├── swarmstack/
-│   ├── orchestrator.md
-│   ├── agents/
-│   │   ├── frontend.md
-│   │   ├── backend.md
-│   │   ├── qa.md
-│   │   ├── review.md
-│   │   ├── ship.md
-│   │   ├── rootcause.md
-│   │   ├── docs.md
-│   │   └── marketing.md   ← new, from ystack-updates
-│   ├── skills/
-│   │   ├── living-skills.md
-│   │   └── git-standards.md  ← new, from ystack-updates
-│   └── examples/
-│       └── focused-ai-GEMINI.md
-├── mcp/
-│   ├── README.md
-│   └── settings.json
-└── .agents/
-    ├── brain/.gitkeep
-    └── skills/
-        └── market-soft-skill/  ← new, from ystack-updates
-            ├── README.md
-            ├── remotion-patterns.md
-            ├── nano-banana-patterns.md
-            └── x-post-patterns.md
-```
-
----
-
-## Built with ystack
-
-[Focused AI](https://github.com/Yasuui) — real-time AI meeting co-pilot
-(Tauri + Python + Gemini 2.0 Flash). Every feature shipped using ystack swarms.
-
----
-
-## Contributing
-
-We ❤️ open-source contributors! 
-1. **Fork** the repo.
-2. **Setup** per the Quick Start.
-3. **Commit** using Conventional Commits.
-4. **Pull Request** must pass the `Review` and `QA` agent audits.
-
----
-
-*Built with ❤️ by [Yonis Diriye](https://github.com/Yasuui) Toronto.*
+Built and maintained by [Yonis Diriye](https://github.com/Yasuui).
